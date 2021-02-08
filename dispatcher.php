@@ -1,5 +1,10 @@
 <?php
 
+namespace MVC;
+
+use MVC\Request;
+use MVC\Router;
+
 class Dispatcher
 {
 
@@ -18,10 +23,10 @@ class Dispatcher
 
     public function loadController()
     {
-        $name = $this->request->controller . "Controller";
+        $name = ucfirst($this->request->controller) . "Controller";
         $file = ROOT . 'Controllers/' . $name . '.php';
-        require($file);
-        $controller = new $name();
+        $className = 'MVC\Controllers\\'. $name;
+        $controller = new $className();
         return $controller;
     }
 

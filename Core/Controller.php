@@ -3,14 +3,25 @@ namespace MVC\Core;
 
     class Controller
     {
+        /*
+        * @var $vars
+        * @var $layout
+        */
         var $vars = [];
         var $layout = "default";
 
+        /*
+        * @param $d
+        */
         function set($d)
         {
             $this->vars = array_merge($this->vars, $d);
         }
 
+        /*
+        * render view
+        * @param $filename
+        */
         function render($filename)
         {
             extract($this->vars);

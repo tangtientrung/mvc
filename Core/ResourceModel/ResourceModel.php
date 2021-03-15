@@ -4,6 +4,7 @@ namespace MVC\Core\ResourceModel;
 
 use MVC\Core\Interfaces\ResourceModelInterface;
 use MVC\Config\Database;
+use PDO;
 
 class ResourceModel implements ResourceModelInterface
 {
@@ -16,13 +17,24 @@ class ResourceModel implements ResourceModelInterface
     protected $id;
     protected $model;
 
+    /*
+    * init function
+    * @param $table
+    * @param $id
+    * @param $model
+    */
     public function _init($table,$id,$model)
     {
-        $this->table=$table;
-        $this->id=$id;
-        $this->model=$model;
+        $this->table = $table;
+        $this->id = $id;
+        $this->model = $model;
     }
 
+    /*
+    * save data
+    * @param $id
+    * @param $model
+    */
     public function save($model,$id=null)
     {
         $arr = get_object_vars($model);
@@ -41,8 +53,8 @@ class ResourceModel implements ResourceModelInterface
             return $req->execute($arrUpdate);
         } else {
             $columns = "";
-            $values=":";
-            $arrInsert=array();
+            $values = ":";
+            $arrInsert = array();
             foreach ($arr as $key => $value)
             {
                 $columns = $columns. lcfirst(substr($key,3))." , ";
@@ -62,6 +74,10 @@ class ResourceModel implements ResourceModelInterface
         }
     }
 
+    /*
+    * delete data
+    * @param $id
+    */
     public function delete($id)
     {
         $sql = 'DELETE FROM '.$this->table.' WHERE id = ?';
@@ -69,20 +85,28 @@ class ResourceModel implements ResourceModelInterface
         return $req->execute([$id]);
     }
 
+    /*
+    * get all data
+    */
     public function getAll()
     {
         $sql = "SELECT * FROM ".$this->table;
         $req = Database::getBdd()->prepare($sql);
         $req->execute();
-        return $req->fetchAll();
+        return $req->fetchAll(PDO::FETCH_OBJ);
+        
     }
     
+    /*
+    * get one row data
+    * @param $id
+    */
     public function getOne($id)
     {
         $sql = "SELECT * FROM ".$this->table." WHERE id =" . $id;
         $req = Database::getBdd()->prepare($sql);
         $req->execute();
-        return $req->fetch();
+        return $req->fetch(PDO::FETCH_OBJ);
     }
 
 }

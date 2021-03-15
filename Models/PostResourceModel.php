@@ -4,14 +4,14 @@ namespace MVC\Models;
 
 use MVC\Core\ResourceModel\ResourceModel;
 
-class TaskResourceModel extends ResourceModel
+class PostResourceModel extends ResourceModel
 {
     /*
     * init constructor for class
     */
     public function __construct()
     {
-        $this->_init('tasks', 'id', 'TaskModel');
+        $this->_init('post', 'id', 'PostModel');
     }
 }
 ?>

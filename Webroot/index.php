@@ -2,7 +2,7 @@
 require __DIR__. '/../vendor/autoload.php';
 
 use MVC\Config\Core;
-use MVC\Route;
+use MVC\Router;
 use MVC\Request;
 use MVC\Dispatcher;
 
